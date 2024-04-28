@@ -17,7 +17,7 @@ import { useToast } from './toast';
 import { useClientHandler } from './useClientHandler';
 
 // Types
-export type SsoAuthProviders = 'google' | 'microsoft' | 'github';
+export type SsoAuthProviders = 'google' | 'microsoft' | 'github' | 'oidc';
 
 export type Config = {
   providers: {
@@ -50,6 +50,20 @@ export type Config = {
         callback_url: string;
         scope: string;
         tenant: string;
+      };
+    };
+    oidc: {
+      name: SsoAuthProviders;
+      enabled: boolean;
+      fields: {
+        client_id: string;
+        client_secret: string;
+        callback_url: string;
+        scope: string;
+        issuer: string;
+        auth_url: string;
+        token_url: string;
+        userinfo_url: string;
       };
     };
   };
@@ -104,6 +118,14 @@ export function useConfigHandler(updatedConfigs?: Config) {
         'GITHUB_CLIENT_SECRET',
         'GITHUB_CALLBACK_URL',
         'GITHUB_SCOPE',
+        'OIDC_CLIENT_ID',
+        'OIDC_CLIENT_SECRET',
+        'OIDC_CALLBACK_URL',
+        'OIDC_SCOPE',
+        'OIDC_ISSUER',
+        'OIDC_AUTH_URL',
+        'OIDC_TOKEN_URL',
+        'OIDC_USERINFO_URL',
         'MAILER_SMTP_URL',
         'MAILER_ADDRESS_FROM',
         'ALLOW_ANALYTICS_COLLECTION',
@@ -169,6 +191,20 @@ export function useConfigHandler(updatedConfigs?: Config) {
             tenant: getFieldValue('MICROSOFT_TENANT'),
           },
         },
+        oidc: {
+          name: 'oidc',
+          enabled: allowedAuthProviders.value.includes('OIDC'),
+          fields: {
+            client_id: getFieldValue('OIDC_CLIENT_ID'),
+            client_secret: getFieldValue('OIDC_CLIENT_SECRET'),
+            callback_url: getFieldValue('OIDC_CALLBACK_URL'),
+            scope: getFieldValue('OIDC_SCOPE'),
+            issuer: getFieldValue('OIDC_ISSUER'),
+            auth_url: getFieldValue('OIDC_AUTH_URL'),
+            token_url: getFieldValue('OIDC_TOKEN_URL'),
+            userinfo_url: getFieldValue('OIDC_USERINFO_URL'),
+          },
+        }
       },
       mailConfigs: {
         name: 'email',
@@ -288,6 +324,55 @@ export function useConfigHandler(updatedConfigs?: Config) {
           item.name !== 'GITHUB_CLIENT_SECRET' &&
           item.name !== 'GITHUB_CALLBACK_URL' &&
           item.name !== 'GITHUB_SCOPE'
+      );
+    }
+
+    if (updatedConfigs?.providers.oidc.enabled) {
+      config.push(
+        {
+          name: 'OIDC_CLIENT_ID',
+          value: updatedConfigs?.providers.oidc.fields.client_id ?? '',
+        },
+        {
+          name: 'OIDC_CLIENT_SECRET',
+          value: updatedConfigs?.providers.oidc.fields.client_secret ?? '',
+        },
+        {
+          name: 'OIDC_CALLBACK_URL',
+          value: updatedConfigs?.providers.oidc.fields.callback_url ?? '',
+        },
+        {
+          name: 'OIDC_SCOPE',
+          value: updatedConfigs?.providers.oidc.fields.scope ?? '',
+        },
+        {
+          name: 'OIDC_ISSUER',
+          value: updatedConfigs?.providers.oidc.fields.issuer ?? '',
+        },
+        {
+          name: 'OIDC_AUTH_URL',
+          value: updatedConfigs?.providers.oidc.fields.auth_url ?? '',
+        },
+        {
+          name: 'OIDC_TOKEN_URL',
+          value: updatedConfigs?.providers.oidc.fields.token_url ?? '',
+        },
+        {
+          name: 'OIDC_USERINFO_URL',
+          value: updatedConfigs?.providers.oidc.fields.userinfo_url ?? '',
+        }
+      );
+    } else {
+      config = config.filter(
+        (item) =>
+          item.name !== 'OIDC_CLIENT_ID' &&
+          item.name !== 'OIDC_CLIENT_SECRET' &&
+          item.name !== 'OIDC_CALLBACK_URL' &&
+          item.name !== 'OIDC_SCOPE' &&
+          item.name !== 'OIDC_ISSUER' &&
+          item.name !== 'OIDC_AUTH_URL' &&
+          item.name !== 'OIDC_TOKEN_URL' &&
+          item.name !== 'OIDC_USERINFO_URL'
       );
     }
 

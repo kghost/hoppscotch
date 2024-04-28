@@ -31,6 +31,10 @@ async function signInUserWithGoogleFB() {
   window.location.href = `${import.meta.env.VITE_BACKEND_API_URL}/auth/google`
 }
 
+async function signInUserWithOidcFB() {
+  window.location.href = `${import.meta.env.VITE_BACKEND_API_URL}/auth/oidc`
+}
+
 async function signInUserWithMicrosoftFB() {
   window.location.href = `${
     import.meta.env.VITE_BACKEND_API_URL
@@ -293,6 +297,9 @@ export const def: AuthPlatformDef = {
   },
   async signInUserWithMicrosoft() {
     await signInUserWithMicrosoftFB()
+  },
+  async signInUserWithOidc() {
+    await signInUserWithOidcFB()
   },
   async signInWithEmailLink(email: string, url: string) {
     const urlObject = new URL(url)

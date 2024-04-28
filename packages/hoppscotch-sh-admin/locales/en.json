@@ -17,7 +17,11 @@
       "scope": "SCOPE",
       "tenant": "TENANT",
       "title": "Authentication Providers",
-      "update_failure": "Failed to update authentication provider configurations!!"
+      "update_failure": "Failed to update authentication provider configurations!!",
+      "issuer": "ISSUER",
+      "auth_url": "AUTH URL",
+      "token_url": "TOKEN URL",
+      "userinfo_url": "USERINFO URL"
     },
     "confirm_changes": "Hoppscotch server must restart to reflect the new changes. Confirm changes made to the server configurations?",
     "input_empty": "Please fill all the fields before updating the configurations",

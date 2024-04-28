@@ -195,6 +195,17 @@ export class InfraConfigService implements OnModuleInit {
           configMap.MICROSOFT_SCOPE &&
           configMap.MICROSOFT_TENANT
         );
+      case AuthProvider.OIDC:
+        return (
+          configMap.OIDC_CLIENT_ID &&
+          configMap.OIDC_CLIENT_SECRET &&
+          configMap.OIDC_CALLBACK_URL &&
+          configMap.OIDC_SCOPE &&
+          configMap.OIDC_ISSUER &&
+          configMap.OIDC_AUTH_URL &&
+          configMap.OIDC_TOKEN_URL &&
+          configMap.OIDC_USERINFO_URL
+        );
       case AuthProvider.EMAIL:
         return configMap.MAILER_SMTP_URL && configMap.MAILER_ADDRESS_FROM;
       default:
@@ -412,6 +423,34 @@ export class InfraConfigService implements OnModuleInit {
           break;
         case InfraConfigEnum.MICROSOFT_TENANT:
           if (!infraConfigs[i].value) return E.left(INFRA_CONFIG_INVALID_INPUT);
+          break;
+        case InfraConfigEnum.OIDC_CLIENT_ID:
+          if (!infraConfigs[i].value) return E.left(INFRA_CONFIG_INVALID_INPUT);
+          break;
+        case InfraConfigEnum.OIDC_CLIENT_SECRET:
+          if (!infraConfigs[i].value) return E.left(INFRA_CONFIG_INVALID_INPUT);
+          break;
+        case InfraConfigEnum.OIDC_CALLBACK_URL:
+          if (!validateUrl(infraConfigs[i].value))
+            return E.left(INFRA_CONFIG_INVALID_INPUT);
+          break;
+        case InfraConfigEnum.OIDC_SCOPE:
+          if (!infraConfigs[i].value) return E.left(INFRA_CONFIG_INVALID_INPUT);
+          break;
+        case InfraConfigEnum.OIDC_ISSUER:
+          if (!infraConfigs[i].value) return E.left(INFRA_CONFIG_INVALID_INPUT);
+          break;
+        case InfraConfigEnum.OIDC_AUTH_URL:
+          if (!validateUrl(infraConfigs[i].value))
+            return E.left(INFRA_CONFIG_INVALID_INPUT);
+          break;
+        case InfraConfigEnum.OIDC_TOKEN_URL:
+          if (!validateUrl(infraConfigs[i].value))
+            return E.left(INFRA_CONFIG_INVALID_INPUT);
+          break;
+        case InfraConfigEnum.OIDC_USERINFO_URL:
+          if (!validateUrl(infraConfigs[i].value))
+            return E.left(INFRA_CONFIG_INVALID_INPUT);
           break;
         default:
           break;

@@ -44,6 +44,10 @@ async function signInUserWithMicrosoftFB() {
   await open(`${import.meta.env.VITE_BACKEND_API_URL}/auth/microsoft?redirect_uri=desktop`);
 }
 
+async function signInUserWithOidcFB() {
+  await open(`${import.meta.env.VITE_BACKEND_API_URL}/auth/oidc`);
+}
+
 async function getInitialUserDetails() {
   const store = new Store(APP_DATA_PATH);
 
@@ -325,6 +329,9 @@ export const def: AuthPlatformDef = {
   },
   async signInUserWithMicrosoft() {
     await signInUserWithMicrosoftFB()
+  },
+  async signInUserWithOidc() {
+    await signInUserWithOidcFB()
   },
   async signInWithEmailLink(_email, _url) {
     const deviceIdentifier = persistenceService.getLocalConfig("deviceIdentifier")

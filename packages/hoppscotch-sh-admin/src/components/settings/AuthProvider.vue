@@ -106,27 +106,47 @@ const providerConfigFields = <ProviderFieldMetadata[]>[
   {
     name: t('configs.auth_providers.client_id'),
     key: 'client_id',
-    applicableProviders: ['google', 'github', 'microsoft'],
+    applicableProviders: ['google', 'github', 'microsoft', 'oidc'],
   },
   {
     name: t('configs.auth_providers.client_secret'),
     key: 'client_secret',
-    applicableProviders: ['google', 'github', 'microsoft'],
+    applicableProviders: ['google', 'github', 'microsoft', 'oidc'],
   },
   {
     name: t('configs.auth_providers.callback_url'),
     key: 'callback_url',
-    applicableProviders: ['google', 'github', 'microsoft'],
+    applicableProviders: ['google', 'github', 'microsoft', 'oidc'],
   },
   {
     name: t('configs.auth_providers.scope'),
     key: 'scope',
-    applicableProviders: ['google', 'github', 'microsoft'],
+    applicableProviders: ['google', 'github', 'microsoft', 'oidc'],
   },
   {
     name: t('configs.auth_providers.tenant'),
     key: 'tenant',
     applicableProviders: ['microsoft'],
+  },
+  {
+    name: t('configs.auth_providers.issuer'),
+    key: 'issuer',
+    applicableProviders: ['oidc'],
+  },
+  {
+    name: t('configs.auth_providers.auth_url'),
+    key: 'auth_url',
+    applicableProviders: ['oidc'],
+  },
+  {
+    name: t('configs.auth_providers.token_url'),
+    key: 'token_url',
+    applicableProviders: ['oidc'],
+  },
+  {
+    name: t('configs.auth_providers.userinfo_url'),
+    key: 'userinfo_url',
+    applicableProviders: ['oidc'],
   },
 ];
 
@@ -149,6 +169,16 @@ const maskState = reactive<Record<SsoAuthProviders, ProviderFields>>({
     callback_url: true,
     scope: true,
     tenant: true,
+  },
+  oidc: {
+    client_id: true,
+    client_secret: true,
+    callback_url: true,
+    scope: true,
+    issuer: true,
+    auth_url: true,
+    token_url: true,
+    userinfo_url: true,
   },
 });
 
